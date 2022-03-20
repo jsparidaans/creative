@@ -5,8 +5,8 @@ import processing.core.PVector
 
 class Sketch : PApplet() {
     private val order = 4
-    private val N = (pow(2f, order.toFloat())).toInt()
-    private val total = N * N
+    private val twoPowerOrder = (pow(2f, order.toFloat())).toInt()
+    private val total = twoPowerOrder * twoPowerOrder
 
     private val path = arrayOfNulls<PVector>(total)
     override fun settings() {
@@ -17,7 +17,7 @@ class Sketch : PApplet() {
     override fun setup() {
         colorMode(HSB, 360f, 255f, 255f)
         background(0)
-        val len = (width / N).toFloat()
+        val len = (width / twoPowerOrder).toFloat()
         for (index in 0 until total) {
             path[index] = hilbert(index)
             path[index]?.mult(len)
@@ -53,15 +53,12 @@ class Sketch : PApplet() {
         }
         counter++
         if (counter >= path.size) {
-            counter = 0;
-        }
-        for (i in 0 until path.size) {
-//            text(i, path[i]?.x!! + 5, path[i]?.y!!)
+            counter = 0
         }
     }
 
-    fun hilbert(i: Int): PVector {
-        var i = i
+    private fun hilbert(pathIndex: Int): PVector {
+        var i = pathIndex
         val vectors = listOf(
             PVector(0f, 0f),
             PVector(0f, 1f),
