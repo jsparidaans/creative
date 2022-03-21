@@ -8,7 +8,7 @@ class Sketch : PApplet() {
     private val twoPowerOrder = (pow(2f, order.toFloat())).toInt()
     private val total = twoPowerOrder * twoPowerOrder
 
-    private val path = arrayOfNulls<PVector>(total)
+    private var path = arrayOfNulls<PVector>(total)
     override fun settings() {
         size(768, 768)
 
@@ -23,11 +23,12 @@ class Sketch : PApplet() {
             path[index]?.mult(len)
             path[index]?.add(len / 2, len / 2)
         }
-        print(total)
+        path = path.filterNotNull().toTypedArray()
     }
 
     private var counter = 0
     override fun draw() {
+
         background(0)
 
         stroke(360f, 255f, 255f)
@@ -37,24 +38,29 @@ class Sketch : PApplet() {
         stroke(255)
         strokeWeight(2f)
         noFill()
-        for (i in 1 until path.size) {
+        for (i in 1 until counter - 2 step 2) {
             val h = map(i.toFloat(), 0f, path.size.toFloat(), 0f, 360f)
             stroke(h, 255f, 255f)
-            strokeWeight(8f)
-            point(path[i]?.x!!, path[i]?.y!!)
+//            strokeWeight(8f)
+//            point(path[i]?.x!!, path[i]?.y!!)
             strokeWeight(2f)
-            line(
-                path[i]?.x!!,
-                path[i]?.y!!,
+
+            bezier(
                 path[i - 1]?.x!!,
                 path[i - 1]?.y!!,
+                path[i]?.x!!,
+                path[i]?.y!!,
+                path[i]?.x!!,
+                path[i]?.y!!,
+                path[i + 1]?.x!!,
+                path[i + 1]?.y!!,
             )
-
         }
         counter++
         if (counter >= path.size) {
             counter = 0
         }
+
     }
 
     private fun hilbert(pathIndex: Int): PVector {
