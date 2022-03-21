@@ -1,4 +1,4 @@
-package net.jsparidaans.creative.sketch
+package net.jsparidaans.creative.hilbert.sketch
 
 import processing.core.PApplet
 import processing.core.PVector
