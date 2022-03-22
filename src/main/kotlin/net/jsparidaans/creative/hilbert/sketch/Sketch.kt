@@ -11,7 +11,6 @@ class Sketch : PApplet() {
     private var path = arrayOfNulls<PVector>(total)
     override fun settings() {
         size(768, 768)
-
     }
 
     override fun setup() {
@@ -101,5 +100,5 @@ class Sketch : PApplet() {
 }
 
 fun main() {
-    PApplet.main("net.jsparidaans.creative.sketch.Sketch")
+    PApplet.main("net.jsparidaans.creative.hilbert.sketch.Sketch")
 }
